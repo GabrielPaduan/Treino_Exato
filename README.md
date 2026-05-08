@@ -82,4 +82,4 @@ Sempre que realizar um commit, é obrigatório seguir a estrutura abaixo:
 
 ## Padrão da Documentação (Diagramas de Sequências/Classe, Casos de Uso)
 
-* Todas as instruções da padronização de nomenclatura a ser utilizada estão localizadas e descritas no arquivo "Guia de Padronização de Nomenclatura - Diagramas (UML_ANÁLISE)". O arquivo dito está presente em TREINO_EXATO/docs/engenharia-software-2
+Todas as instruções da padronização de nomenclatura a ser utilizada estão localizadas e descritas no arquivo "Guia de Padronização de Nomenclatura - Diagramas (UML_ANÁLISE)". O arquivo dito está presente em TREINO_EXATO/docs/engenharia-software-2
