@@ -33,16 +33,53 @@ Para manter a organização e a integridade do código, seguimos diretrizes ríg
 3.  **Merge Centralizado:** O merge final para a branch `main` será realizado exclusivamente por uma única pessoa designada.
 
 ---
-
 ## 📝 Padrão de Commits
 
-A fim de facilitar a leitura do histórico e a revisão do código:
+Para mantermos o histórico de versionamento limpo, rastreável e facilitar a revisão de código (Code Review), este projeto adota a especificação do **[Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/)**.
 
-* Cada `push` para uma branch deve ser composto por commits **devidamente descritivos**, especificando claramente as alterações feitas.
-* O idioma padrão adotado para as mensagens de commit é o **PT-BR**.
+### 📌 Regras Gerais
+* **Idioma:** O idioma padrão adotado para as mensagens de commit é o **Português (PT-BR)**.
+* **Clareza e Contexto:** Cada `push` deve ser composto por commits **atômicos e devidamente descritivos**. Evite commits genéricos como *"alterações"*, especificando claramente o que foi feito.
 
+### 🏗️ Estrutura do Commit
+
+Sempre que realizar um commit, é obrigatório seguir a estrutura abaixo:
+
+```text
+<tipo>(<escopo>): <descrição>
 ---
+
+### 🏷️ Tipos de Commits permitidos
+
+| Tipo | Descrição | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`feat`** | Adiciona uma nova funcionalidade ao projeto. | Criação de uma nova tela ou rota de API. |
+| **`fix`** | Corrige um bug ou comportamento indesejado. | Resolução de um erro de cálculo ou layout quebrado. |
+| **`docs`** | Alterações exclusivas na documentação. | Atualização do `README.md` ou diagramas UML. |
+| **`refactor`** | Refatoração de código (não adiciona feature nem corrige bug). | Melhoria de performance ou reorganização de pastas. |
+| **`style`** | Mudanças de formatação (espaços, ponto e vírgula, indentação). | Aplicação de regras do Prettier ou ESLint. |
+| **`test`** | Adição ou correção de testes automatizados. | Criação de testes unitários para um controller. |
+| **`chore`** | Tarefas de manutenção, dependências ou build. | Atualização de pacotes (ex: via Yarn). |
+
+### ✅ Exemplos Práticos
+
+**🟢 Correto:**
+> `feat(login): adicionar validação de e-mail no formulário`
+> `fix(api): corrigir erro 500 na rota de cadastro de aluno`
+> `docs: criar diagrama de sequência da página inicial`
+> `chore: atualizar dependência do react-router-dom`
+
+**🔴 Incorreto:**
+> `atualização na tela de login` *(Falta tipo e formatação)*
+> `fix(login) corrigido erro` *(Falta os dois pontos e a descrição está vaga)*
+> `feat: Adicionado novas tabelas` *(Verbo conjugado no passado e letra maiúscula na descrição)*
 
 ## 🚀 Ciclo de Lançamento (Releases)
 
 * Uma nova **Release** oficial da branch `main` será gerada e lançada conforme os ciclos de atividades forem concluídos no planejamento do projeto.
+
+---
+
+## Padrão da Documentação (Diagramas de Sequências/Classe, Casos de Uso)
+
+* Todas as instruções da padronização de nomenclatura a ser utilizada estão localizadas e descritas no arquivo "Guia de Padronização de Nomenclatura - Diagramas (UML_ANÁLISE)". O arquivo dito está presente em TREINO_EXATO/docs/engenharia-software-2
