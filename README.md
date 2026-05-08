@@ -47,7 +47,7 @@ Sempre que realizar um commit, é obrigatório seguir a estrutura abaixo:
 
 ```text
 <tipo>(<escopo>): <descrição>
----
+```
 
 ### 🏷️ Tipos de Commits permitidos
 
