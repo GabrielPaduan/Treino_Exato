@@ -1,0 +1,56 @@
+@startuml
+title Criar Treino - Diagrama de Sequência (Fase de Projeto)
+
+actor Instrutor
+
+boundary NavegacaoView
+boundary ListagemAlunosView
+boundary PerfilAlunoView
+boundary TreinosModeloView
+
+control ControladorPrincipalControl
+control AlunoControl
+control TreinoControl
+
+entity AlunoRepository
+entity TreinoRepository
+
+Instrutor -> NavegacaoView : navegarParaListagem()
+NavegacaoView -> ControladorPrincipalControl : GET /api/alunos
+ControladorPrincipalControl -> AlunoControl : listarAlunos()
+AlunoControl -> AlunoRepository : buscarTodos()
+AlunoRepository --> AlunoControl : listaAlunos
+AlunoControl --> ControladorPrincipalControl : 200 OK (JSON: listaAlunos)
+ControladorPrincipalControl --> ListagemAlunosView : 200 OK (JSON: listaAlunos)
+ListagemAlunosView -> ListagemAlunosView : renderizar(listaAlunos)
+
+Instrutor -> ListagemAlunosView : selecionarAluno(idAluno)
+ListagemAlunosView -> AlunoControl : GET /api/alunos/{idAluno}
+AlunoControl -> AlunoRepository : buscarPorId(idAluno)
+AlunoRepository --> AlunoControl : dadosAluno
+AlunoControl --> PerfilAlunoView : 200 OK (JSON: dadosAluno)
+PerfilAlunoView -> PerfilAlunoView : renderizar(dadosAluno)
+
+Instrutor -> PerfilAlunoView : pressionarBotaoCriar()
+PerfilAlunoView -> TreinoControl : GET /api/treinos/modelos
+TreinoControl -> TreinoRepository : buscarTreinosModelo()
+TreinoRepository --> TreinoControl : listaTreinosModelo
+TreinoControl --> TreinosModeloView : 200 OK (JSON: listaTreinosModelo)
+TreinosModeloView -> TreinosModeloView : renderizar(listaTreinosModelo)
+
+Instrutor -> TreinosModeloView : selecionarTreino(idTreino)
+TreinosModeloView -> TreinoControl : POST /api/treinos/associar\n(payload: idAluno, idTreino)
+TreinoControl -> TreinoRepository : cadastrarNovoTreino(idAluno, idTreino)
+
+alt [sucesso]
+    TreinoRepository --> TreinoControl : confirmacao
+    TreinoControl --> TreinosModeloView : 201 Created
+    TreinosModeloView -> ControladorPrincipalControl : solicitarRota("listagem-alunos")
+    ControladorPrincipalControl --> ListagemAlunosView : renderizar()
+else [erro]
+    TreinoRepository --> TreinoControl : falha
+    TreinoControl --> TreinosModeloView : 500 Internal Server Error
+    TreinosModeloView -> TreinosModeloView : exibirAlertaErro()
+end
+
+@enduml
