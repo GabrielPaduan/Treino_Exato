@@ -9,8 +9,7 @@ export function LoginView() {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#191919',
-    }}
-  >
+    }}>
     <div
         style={{
             display: 'flex',
@@ -25,8 +24,7 @@ export function LoginView() {
             fontWeight: 'bold',
             fontFamily: 'Arial',
             color: 'white',
-            }}
-        > 
+            }}> 
             Treino Exato
         </h1>
         <LoginForm />;

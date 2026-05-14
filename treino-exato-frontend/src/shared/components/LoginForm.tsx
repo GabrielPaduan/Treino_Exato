@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { jwtDecode } from 'jwt-decode';
 import { useAuth } from '../context/auth_context';
-import { loginUser } from '../services/usuarioService';
+import { enviarLogin } from '../services/usuarioService';
 import type { LoginDTO } from '../utils/DTO';
 
 export function LoginForm() {
@@ -23,7 +23,7 @@ export function LoginForm() {
 
     async function onSubmit(loginData: LoginDTO) {
         try {
-            const { token } = await loginUser(loginData);
+            const { token } = await enviarLogin(loginData);
 
             await login(token);
 
@@ -48,7 +48,6 @@ export function LoginForm() {
             }}>
                 <h2
                 style={{
-                    //fontSize: '2rem',
                     fontWeight: 'bold',
                     fontFamily: 'Arial',
                     color: 'white',
@@ -56,26 +55,51 @@ export function LoginForm() {
                     Faça login
                 </h2>
             </div>
-        <div>
+        <div
+        style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: '10px',
+        }}>
             <input
             id="login"
             type="text"
             placeholder="E-Mail / CPF"
             {...register('login', { required: 'Campo obrigatório' })}
             />
-            {errors.login && <span>{errors.login.message}</span>}
+            {errors.login && 
+            <span
+            style={{
+                color: 'white',
+                fontSize: '12px',
+                minHeight: '16px',
+                fontFamily: 'Arial'
+                }}>
+                    {errors.login.message}
+            </span>}
         </div>
-        <div>
+        <div
+        style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: '10px',
+        }}>
             <input
             id="senha"
             type="password"
             placeholder="Senha"
-            {...register('senha', {
-                required: 'Campo obrigatório',
-                //minLength: { value: 6, message: 'Mínimo 6 caracteres' },
-            })}
+            {...register('senha', { required: 'Campo obrigatório' })}
             />
-            {errors.senha && <span>{errors.senha.message}</span>}
+            {errors.senha && 
+            <span
+            style={{
+                color: 'white',
+                fontSize: '12px',
+                minHeight: '16px',
+                fontFamily: 'Arial',
+                }}>
+                    {errors.senha.message}
+            </span>}
         </div>
         <div
             style={{
@@ -83,7 +107,6 @@ export function LoginForm() {
             flexDirection: 'column',
             alignItems: 'center',
             gap: '20px',
-            
         }}>
             <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Entrando...' : 'Entrar'}
