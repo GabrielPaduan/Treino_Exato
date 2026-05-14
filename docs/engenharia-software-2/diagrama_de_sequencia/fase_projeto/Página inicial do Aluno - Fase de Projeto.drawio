@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Página-1" id="i39on0QtCQNSu8kpWuZB">
-    <mxGraphModel dx="2800" dy="1463" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -58,7 +58,7 @@
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="1240" width="40" x="523" y="290" as="geometry" />
         </mxCell>
-        <mxCell id="Mpyeudkf9FWeb3fb-DCi-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-size: 21px;&quot;&gt;:AlunoService&lt;/span&gt;" vertex="1">
+        <mxCell id="Mpyeudkf9FWeb3fb-DCi-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;font-size: 21px;&quot;&gt;:AgendaService&lt;/span&gt;" vertex="1">
           <mxGeometry height="80" width="180" x="1103" y="130" as="geometry" />
         </mxCell>
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-13" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeWidth=5;" value=" ">
@@ -100,7 +100,7 @@
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="100" width="40" x="1173" y="450" as="geometry" />
         </mxCell>
-        <mxCell id="Mpyeudkf9FWeb3fb-DCi-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;buscarAgenda(idAluno)&lt;/font&gt;" vertex="1">
+        <mxCell id="Mpyeudkf9FWeb3fb-DCi-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;buscarAgendaDoDia(alunoId)&lt;/font&gt;" vertex="1">
           <mxGeometry height="30" width="191.69" x="939" y="440" as="geometry" />
         </mxCell>
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-22" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeWidth=5;dashed=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" value="">
@@ -109,7 +109,7 @@
             <mxPoint x="911" y="528" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Mpyeudkf9FWeb3fb-DCi-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;agenda&lt;/span&gt;" vertex="1">
+        <mxCell id="Mpyeudkf9FWeb3fb-DCi-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;agendaId&lt;/span&gt;" vertex="1">
           <mxGeometry height="30" width="110" x="981.31" y="490" as="geometry" />
         </mxCell>
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-24" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Aluno&lt;/font&gt;" vertex="1">
@@ -181,7 +181,7 @@
             <mxPoint x="502" y="1447.48" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Mpyeudkf9FWeb3fb-DCi-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;:AgendaRepository&lt;/font&gt;" vertex="1">
+        <mxCell id="Mpyeudkf9FWeb3fb-DCi-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;:TreinoRepository&lt;/font&gt;" vertex="1">
           <mxGeometry height="80" width="180" x="1330" y="130" as="geometry" />
         </mxCell>
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-42" edge="1" parent="1" source="Mpyeudkf9FWeb3fb-DCi-44" style="endArrow=none;dashed=1;html=1;rounded=0;strokeWidth=5;" value="">
@@ -205,7 +205,7 @@
             <mxPoint x="1172" y="660" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Mpyeudkf9FWeb3fb-DCi-46" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;buscarExercicios(agenda)&lt;/font&gt;" vertex="1">
+        <mxCell id="Mpyeudkf9FWeb3fb-DCi-46" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;findExerciciosByAgenda(agendaId)&lt;/font&gt;" vertex="1">
           <mxGeometry height="30" width="191.69" x="939" y="620" as="geometry" />
         </mxCell>
         <mxCell id="Mpyeudkf9FWeb3fb-DCi-47" edge="1" parent="1" source="Mpyeudkf9FWeb3fb-DCi-44" style="endArrow=classic;html=1;rounded=0;strokeWidth=5;dashed=1;exitX=0.036;exitY=0.653;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
