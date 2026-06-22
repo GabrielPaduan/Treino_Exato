@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 
 import type { LoginDTO, LoginResponse } from '../types/DTO.js';
 
-import { autenticarUsuario } from '../services/usuarioService.js';
+import { autenticarUsuario } from '../services/usuario_service.js';
 
 export async function login(req: Request, res: Response) {
 

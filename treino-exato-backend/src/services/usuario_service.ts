@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken';
 
 import type { LoginDTO } from '../types/DTO.js';
 
-import { buscarUsuarioPorEmail } from '../repositories/usuarioRepository.js';
+import { buscarUsuarioPorEmail } from '../repositories/usuario_repository.js';
 
-import { buscarAlunoPorCPF } from '../repositories/alunoRepository.js';
+import { buscarAlunoPorCPF } from '../repositories/aluno_repository.js';
 
-import { buscarPersonalPorCPF } from '../repositories/personalRepository.js';
+import { buscarPersonalPorCPF } from '../repositories/personal_repository.js';
 
 export async function autenticarUsuario(
     loginData: LoginDTO
