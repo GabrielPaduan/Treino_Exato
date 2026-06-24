@@ -6,3 +6,10 @@ export interface LoginDTO {
 export interface LoginResponse {
   token: string;
 }
+
+export interface User {
+  cpf: string,
+  nome: string,
+  email: string,
+  password_hash: string
+}
