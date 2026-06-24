@@ -1,5 +1,6 @@
 // Importa a instância do Supabase configurada para interagir com o banco de dados
 import supabase from '../config/supabase.js';
+import type { User } from '../types/DTO.js';
 
 /** Função responsável por buscar um usuário no banco de dados pelo email fornecido.
  * 
@@ -9,7 +10,7 @@ import supabase from '../config/supabase.js';
  * @param email Email do usuário a ser buscado no banco de dados
  * @returns     Dados do usuário encontrado se houver correspondência. Lança um erro caso contrário
  */
-export async function buscarUsuarioPorEmail(email: string){
+export async function buscarUsuarioPorEmail(email: string): Promise<User>{
     /** 1: Realiza uma consulta no banco de dados usando o Supabase para buscar um usuário com o email fornecido.
      * 
      * A consulta seleciona todos os campos da tabela 'usuario' 
@@ -27,8 +28,11 @@ export async function buscarUsuarioPorEmail(email: string){
      * @param email Email do usuário a ser buscado no banco de dados, fornecido como parâmetro da função
      * @returns     Dados do usuário encontrado se houver correspondência. Lança um erro caso contrário
      */
-    const { data, error } = await supabase.from('usuario').select('*').eq('email', email).single();
-
+    const { data, error } = await supabase
+        .from('usuario')
+        .select('*')
+        .eq('email', email)
+        .single();
     // 2: Verifica se ocorreu algum erro durante a consulta ao banco de dados.
     if(error) {throw error;}
 

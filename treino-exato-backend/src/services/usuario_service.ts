@@ -36,7 +36,6 @@ export async function autenticarUsuario(loginData: LoginDTO){
     const usuario = await buscarUsuarioPorEmail(loginData.login);
     // 1.1: Se o usuário não for encontrado, lança um erro indicando que o usuário não foi encontrado
     if(!usuario) {throw new Error('Usuário não encontrado');}
-    
     // 2: Compara a senha fornecida pelo usuário com a senha armazenada no banco de dados usando bcrypt
     const senhaCorreta = await bcrypt.compare(loginData.senha, usuario.password_hash);
     // 2.1: Se a senha não corresponder, lança um erro indicando que a senha é inválida
