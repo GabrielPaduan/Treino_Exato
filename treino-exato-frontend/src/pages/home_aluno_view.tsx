@@ -22,7 +22,7 @@ export function HomeAlunoView() {
             try {
                 // Pega a lista de exercicios do supabase
                 const data = await getDashboardData(token);
-                
+                console.log(user?.name);
                 if (data.length > 0) {
                     setExercicios(data);
                     setStatus('success'); // exibeLista(Exercicios[])

@@ -110,7 +110,7 @@ export function LoginForm(){
             <input
             id="login"
             type="text"
-            placeholder="E-Mail / CPF"
+            placeholder="E-Mail"
             {...register('login', { required: 'Campo obrigatório' })}
             />
             {errors.login && <span>{errors.login.message}</span>}
