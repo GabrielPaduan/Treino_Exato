@@ -13,3 +13,9 @@ export interface User {
   email: string,
   password_hash: string
 }
+
+export interface AlunoDTO {
+    id: string;
+    nome: string;
+    foto?: string;
+}
