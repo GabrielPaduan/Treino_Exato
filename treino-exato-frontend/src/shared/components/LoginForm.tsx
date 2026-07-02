@@ -32,7 +32,7 @@ export function LoginForm(){
 
     // 3: Define um objeto que mapeia os papéis (roles) dos usuários para as rotas correspondentes na aplicação
     const rotasPorPerfil: Record<string, string> = {
-        ALUNO: '/testeLogin',       // Adicione a rota correta para o aluno quando estiver disponível
+        ALUNO: '/alunoView',       // Adicione a rota correta para o aluno quando estiver disponível
         PERSONAL: '/testeLogin',    // Adicione a rota correta para o personal trainer quando estiver disponível
     };
 
@@ -68,6 +68,9 @@ export function LoginForm(){
 
             // 5.1.3: Decodifica o token JWT para obter o papel (role) do usuário e navega para a rota correspondente
             const decoded = jwtDecode<{ role: string }>(token);
+            const perfil = decoded.role;
+
+            const rotaDestino = rotasPorPerfil[perfil] || '/login';
 
             // 5.1.4: Navega para a rota correspondente ao papel (role) do usuário,
             // ou para a rota padrão '/login' caso o papel não esteja definido no mapeamento

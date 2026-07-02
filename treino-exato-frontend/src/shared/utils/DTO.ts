@@ -6,3 +6,11 @@ export interface LoginDTO {
 export interface LoginResponse {
   token: string;
 }
+
+export interface ExercicioDTO {
+    id: string;
+    nome: string;
+    series: number;
+    repeticoes: string;
+    videoUrl?: string;
+}

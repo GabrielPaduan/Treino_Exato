@@ -23,7 +23,7 @@ export const loginUser = async (loginData: LoginDTO): Promise<LoginResponse> => 
      * response:     Variável que armazena a resposta da API, que contém o token de autenticação do usuário.
      * 'auth/login': Endpoint da API para autenticação do usuário.
      */
-    const response = await api.post<{ response: LoginResponse }>('/auth/login', loginData);
+    const response = await api.post<{ response: LoginResponse }>('/auth/login/teste', loginData);
 
     // 2: Retorna a resposta da API, que contém o token de autenticação do usuário.
     return response.data.response;
