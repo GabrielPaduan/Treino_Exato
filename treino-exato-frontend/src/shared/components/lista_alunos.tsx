@@ -38,12 +38,11 @@ export function ListaAlunos() {
 
     useEffect(() => {
         const buscar = async () => {
-            /*
             const token = localStorage.getItem('@GymApp:token');
             if (!token) {
                 navigate('/login');
                 return;
-            }*/
+            }
 
             try {
                 const dados = await carregarAlunos();

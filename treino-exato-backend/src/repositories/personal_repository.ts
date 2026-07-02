@@ -3,7 +3,7 @@ import supabase from '../config/supabase.js';
 export async function buscarPersonalPorCPF(
     cpf: string
 ) {
-    const { data, error } = await supabase.from('personal_trainer').select('*').eq('cpf', cpf).single();
+    const { data, error } = await supabase.from('personal_trainer').select('*').eq('cpf_usuario', cpf).single();
     if (error) {
         return null;
     }
