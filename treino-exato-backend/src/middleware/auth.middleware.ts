@@ -19,7 +19,7 @@ declare global {
       user?: TokenPayload;
     }
   }
-}
+} 
 
 // 3. Middleware de Autenticação (Verifica se está logado)
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
@@ -33,9 +33,9 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const secret = process.env.JWT_SECRET;
+    const secret = process.env.JWT_SECRET_KEY;
     if (!secret) throw new Error("JWT_SECRET não está configurado.");
-
+    
     // Decodifica e tipa o payload
     const decoded = jwt.verify(token, secret) as TokenPayload;
     
