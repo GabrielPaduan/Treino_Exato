@@ -68,7 +68,7 @@ export function ListaAlunos() {
                     justifyContent: "center",
                     alignItems: "center",
                     height: "100vh",
-                    bgcolor: "#121212",
+                    bgcolor: "#191919"
                 }}
             >
                 <CircularProgress />
@@ -93,13 +93,19 @@ export function ListaAlunos() {
                     </IconButton>
                     <Typography
                         variant="h6"
-                        sx={{ flexGrow: 1 }}
+                        sx={{ flexGrow: 1, textAlign: 'center' }}
                     >
                         Treino Exato
                     </Typography>
                     <Avatar />
                 </Toolbar>
             </AppBar>
+            <Typography
+                variant="h6"
+                sx={{ mt: 2, mb: 1, px: 2, color: 'white', textAlign: 'center' }}
+            >
+                Lista de Alunos
+            </Typography>
             <Box
                 sx={{
                     flex: 1,
@@ -127,15 +133,24 @@ export function ListaAlunos() {
                     {alunos.map(aluno => (
                         <ListItem
                             key={aluno.id}
+                            sx={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
                         >
                             <ListItemAvatar>
                                 <Avatar
                                     src={aluno.foto}
                                 />
                             </ListItemAvatar>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Box sx={{
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: '50%',
+                                    bgcolor: 'white',
+                                }} />
                             <ListItemText
                                 primary={aluno.nome}
                             />
+                            </Box>
                         </ListItem>
                     ))}
                 </List>
