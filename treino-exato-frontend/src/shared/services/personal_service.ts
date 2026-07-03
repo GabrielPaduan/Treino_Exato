@@ -1,8 +1,13 @@
 import type { AlunoDTO } from "../utils/DTO";
 import api from './api';
 
-export const carregarAlunos = async (): Promise<AlunoDTO[]> => {
-    const response = await api.get('/api/personal/dashboard');
+export const carregarAlunos = async (token: string, idPersonal: string): Promise<AlunoDTO[]> => {
+    console.log(idPersonal);
+    const response = await api.get(`/personal/dashboard/${idPersonal}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
     return response.data;
 
     /* dados mockados para teste
@@ -19,8 +24,12 @@ export const carregarAlunos = async (): Promise<AlunoDTO[]> => {
     ];*/ 
 };
 
-export const carregarPerfilAluno = async (idAluno: string): Promise<AlunoDTO> => {
-    const response = await api.get(`/api/personal/dashboard/${idAluno}`);
+export const carregarPerfilAluno = async (idAluno: string, token: string): Promise<AlunoDTO> => {
+    const response = await api.get(`/personal/dashboard/buscarAlunos/${idAluno}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+            }
+        });
     return response.data;
 
     // dados mockados para teste

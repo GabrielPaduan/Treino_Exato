@@ -4,15 +4,13 @@ import * as personal_repository from "../repositories/personal_repository.js";
 export const buscarAlunos = async (
     personalId: string
 ): Promise<AlunoDTO[]> => {
-
     const alunos = await personal_repository.obterAlunosVinculados(personalId);
 
     return alunos
         .filter((aluno): aluno is NonNullable<typeof aluno> => aluno !== null)
         .map(aluno => ({
-            id: aluno.id,
-            nome: aluno.nome,
-            foto: aluno.foto
+            cpf: aluno.cpf,
+            nome: aluno.nome
         }));
 };
 
@@ -31,8 +29,7 @@ export const buscarPerfilAluno = async (
     }
 
     return {
-        id: aluno.id,
-        nome: aluno.nome,
-        foto: aluno.foto
+        cpf: aluno.cpf,
+        nome: aluno.nome
     };
 };

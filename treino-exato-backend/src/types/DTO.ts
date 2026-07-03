@@ -15,7 +15,6 @@ export interface User {
 }
 
 export interface AlunoDTO {
-    id: string;
+    cpf: string;
     nome: string;
-    foto?: string;
 }

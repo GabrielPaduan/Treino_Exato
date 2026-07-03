@@ -17,30 +17,26 @@ export const obterAlunosVinculados = async (personalId: string) => {
         .select(`
             aluno (
                 usuario (
-                    id,
-                    nome,
-                    foto
+                    cpf,
+                    nome
                 )
             )
         `)
-        .eq('personal_id', personalId)
-        .eq('status', 'ATIVO');
- 
+        .eq('cpf_personal', personalId)
+        .eq('status', true);
     if (error) {
         throw error;
     }
- 
     return (data as any[]).map((item: any) => {
-    const usuario = item.aluno?.[0]?.usuario?.[0];
-    if (!usuario) 
-        return null;
+        const usuario = item.aluno?.usuario; 
+        
+        if (!usuario) return null;
 
-    return {
-        id: usuario.id,
-        nome: usuario.nome,
-        foto: usuario.foto ?? undefined,
-    };
-}).filter(Boolean);
+        return {
+            cpf: usuario.cpf,
+            nome: usuario.nome
+        };
+    }).filter(Boolean);
 };
  
 export const obterPerfilAluno = async (personalId: string, idAluno: string) => {
@@ -49,15 +45,14 @@ export const obterPerfilAluno = async (personalId: string, idAluno: string) => {
         .select(`
             aluno (
                 usuario (
-                    id,
-                    nome,
-                    foto
+                    cpf,
+                    nome
                 )
             )
         `)
-        .eq('personal_id', personalId)
-        .eq('aluno_id', idAluno)
-        .eq('status', 'ATIVO')
+        .eq('cpf_personal', personalId)
+        .eq('cpf_aluno', idAluno)
+        .eq('status', true)
         .single();
  
     if (error) {
@@ -65,13 +60,12 @@ export const obterPerfilAluno = async (personalId: string, idAluno: string) => {
         throw error;
     }
  
-    const usuario = (data as any).aluno?.[0]?.usuario?.[0];
-    if (!usuario) 
-        return null;
- 
+    const usuario = (data as any).aluno?.usuario; 
+    
+    if (!usuario) return null;
+
     return {
-        id: usuario.id,
-        nome: usuario.nome,
-        foto: usuario.foto ?? undefined,
+        cpf: usuario.cpf,
+        nome: usuario.nome
     };
 };

@@ -4,8 +4,8 @@ import { verifyToken, authorizeRoles } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.get('/dashboard', verifyToken, authorizeRoles('PERSONAL'), personal_controller.carregarAlunos);
+router.get('/dashboard/:idPersonal', verifyToken, authorizeRoles('PERSONAL'), personal_controller.carregarAlunos);
 
-router.get('/dashboard/:idAluno', verifyToken, authorizeRoles('PERSONAL'), personal_controller.carregarPerfilAluno);
+router.get('/dashboard/buscarAlunos/:idAluno', verifyToken, authorizeRoles('PERSONAL'), personal_controller.carregarPerfilAluno);
 
 export default router;

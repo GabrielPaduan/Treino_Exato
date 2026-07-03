@@ -27,6 +27,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { carregarAlunos } from '../services/personal_service.ts';
 import type { AlunoDTO } from '../utils/DTO.ts';
+import { jwtDecode } from "jwt-decode";
 
 export function ListaAlunos() {
 
@@ -44,12 +45,15 @@ export function ListaAlunos() {
                 return;
             }
 
+            const decoded = jwtDecode<{cpf: string}>(token);
+
             try {
-                const dados = await carregarAlunos();
+                const dados = await carregarAlunos(token, decoded.cpf);
                 setAlunos(dados);
             } catch (err: any) {
                 if (err.response?.status === 401) {
-                    navigate("/login");
+                    console.log(err.response);
+                    // navigate("/login");
                     return;
                 }
                 setErro("Erro ao carregar alunos.");

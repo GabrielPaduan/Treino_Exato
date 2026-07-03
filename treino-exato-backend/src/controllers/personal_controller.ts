@@ -3,7 +3,10 @@ import * as personal_service from '../services/personal_service.js';
 
 export const carregarAlunos = async (req: express.Request, res: express.Response) => {
     try {
-        const personalId = req.user!.sub;
+        const personalId = req.params.idPersonal;
+        if (!personalId || Array.isArray(personalId)) {
+            return res.status(400).json({ error: "ID do personal inválido." });
+        }
         const alunos = await personal_service.buscarAlunos(personalId);
         res.status(200).json(alunos);
     } 
