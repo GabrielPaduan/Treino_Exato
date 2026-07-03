@@ -8,7 +8,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { LoginView } from '../pages/Login';
-import { HomeAlunoView } from '../pages/home_aluno_view';
+import { HomeAlunoView } from '../pages/home_aluno_view.tsx';
 import { HomePersonalView } from '../pages/home_personal_view';
 
 /** Função que define as rotas da aplicação.
