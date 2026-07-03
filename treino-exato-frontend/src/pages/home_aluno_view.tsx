@@ -5,6 +5,8 @@ import { getDashboardData } from '../shared/services/dashboard_aluno_service';
 import type { ExercicioDTO } from '../shared/utils/DTO';
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { Home, Person, Repeat, Search } from '@mui/icons-material';
 
 const HomeIcon = () => <i className="bi bi-house fs-5"></i>;
 const SearchIcon = () => <i className="bi bi-search fs-5"></i>;
@@ -97,6 +99,7 @@ export function HomeAlunoView() {
 }
 
 function Navigation({ userName }: { userName: string }) {
+    const [navValue, setNavValue] = useState(0);
     return (
         <>
             <aside className="d-none d-lg-flex flex-column flex-shrink-0 p-4 border-end border-secondary border-opacity-25" style={{ width: '260px', minHeight: '100vh', position: 'sticky', top: 0 }}>
@@ -132,22 +135,39 @@ function Navigation({ userName }: { userName: string }) {
             </aside>
 
             {/* MOBILE BOTTOM NAVIGATION (Fixada embaixo, visível apenas abaixo de LG) */}
-            <nav className="d-lg-none fixed-bottom bg-dark border-top border-secondary border-opacity-25 d-flex justify-content-around align-items-center py-2" style={{ zIndex: 1050, backgroundColor: '#1a1a1a !important' }}>
-                {ITENS_NAV.map(({ label, Icon, ativo }) => (
-                    <button
-                        key={label}
-                        className="btn d-flex flex-column align-items-center justify-content-center border-0 bg-transparent p-1"
-                        style={{
-                            color: ativo ? '#fff' : 'rgba(255,255,255,0.5)',
-                            fontSize: '0.75rem',
-                            minWidth: '60px'
-                        }}
-                    >
-                        <Icon />
-                        <span className="mt-1" style={{ fontSize: '0.65rem', fontWeight: ativo ? '600' : '400' }}>{label}</span>
-                    </button>
-                ))}
-            </nav>
+            {/* <nav className="d-lg-none fixed-bottom bg-dark border-top border-secondary border-opacity-25 d-flex justify-content-around align-items-center py-2" style={{ zIndex: 1050, backgroundColor: '#1a1a1a !important' }}> */}
+            <Paper 
+                elevation={5} 
+                sx={{ 
+                    position: 'fixed', 
+                    bottom: 0, 
+                    left: 0, 
+                    right: 0, 
+                    zIndex: 1050,
+                    display: { xs: 'block', lg: 'none' } // Oculta o rodapé em telas grandes
+                }}
+            >
+                <BottomNavigation
+                    showLabels
+                    value={navValue}
+                    onChange={(_, newValue) => setNavValue(newValue)}
+                    sx={{
+                        bgcolor: '#191919',
+                        '& .MuiBottomNavigationAction-root': {
+                            color: '#888',
+                        },
+                        '& .Mui-selected': {
+                            color: '#ffffff !important',
+                        },
+                    }}
+                >
+                    <BottomNavigationAction label="Início" icon={<Home />} />
+                    <BottomNavigationAction label="Buscar" icon={<Search />} />
+                    <BottomNavigationAction label="Trocar" icon={<Repeat />} />
+                    <BottomNavigationAction label="Perfil" icon={<Person />} />
+                </BottomNavigation>
+            </Paper>
+            {/* </nav> */}
         </>
     );
 }
@@ -225,7 +245,7 @@ function ExerciciosList({ status, exercicios }: { status: string, exercicios: Ex
                             <div className="d-flex align-items-center pe-2 user-select-none overflow-hidden">
                                 <span className="rounded-circle flex-shrink-0 me-3 d-none d-sm-inline-block" style={{ width: '10px', height: '10px', backgroundColor: '#0d6efd' }} />
                                 <div className="text-truncate">
-                                    <p className="mb-0 fs-6 fs-sm-5 fw-semibold text-white text-truncate">{ex.nome}</p>
+                                    <p className="mb-0 fs-6 fs-sm-5 fw-semibold text-white text-truncate">{ex.nome_treino}</p>
                                     <p className="mb-0 text-white-50 small mt-1 text-wrap">
                                         Séries: <span className="text-white fw-medium">{ex.series}</span> × Repetições: <span className="text-white fw-medium">{ex.repeticoes}</span>
                                     </p>
@@ -242,7 +262,7 @@ function ExerciciosList({ status, exercicios }: { status: string, exercicios: Ex
                                 >
                                     <img
                                         src='https://via.placeholder.com/72'
-                                        alt={ex.nome}
+                                        alt={ex.nome_treino}
                                         className="w-100 h-100 object-fit-cover"
                                     />
                                 </a>

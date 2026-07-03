@@ -19,7 +19,7 @@ declare global {
       user?: TokenPayload;
     }
   }
-}
+} 
 
 // 3. Middleware de Autenticação (Verifica se está logado)
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {

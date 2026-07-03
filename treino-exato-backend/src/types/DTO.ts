@@ -32,7 +32,7 @@ export interface TokenPayload {
     email: string;
     name: string;
     role: string;
-    id?: string;
+    cpf?: string;
 }
 
 export interface AuthRequest extends Request {

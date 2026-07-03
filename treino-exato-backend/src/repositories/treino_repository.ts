@@ -4,20 +4,11 @@ const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SE
 
 export class TreinoRepository {
     async findExerciciosByAgenda(agendaId: string) {
-        // APENAS PARA TESTE
-        if (agendaId === 'agenda-fake-001') {
-            return [
-                { id: 'ex1', nome: 'Supino Reto', series: 3, repeticoes: '12' },
-                { id: 'ex2', nome: 'Agachamento', series: 4, repeticoes: '10' }
-            ];
-        }
-        //
-
         // Consulta no supabase
         const { data, error } = await supabase
-            .from('exercicios')
+            .from('treino_exercicio')
             .select('*')
-            .eq('agenda_id', agendaId);
+            .eq('id_treino', agendaId);
 
         if (error) throw new Error('Erro ao buscar exercícios');
         

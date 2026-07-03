@@ -9,7 +9,7 @@ export interface LoginResponse {
 
 export interface ExercicioDTO {
     id: string;
-    nome: string;
+    nome_treino: string;
     series: number;
     repeticoes: string;
     videoUrl?: string;

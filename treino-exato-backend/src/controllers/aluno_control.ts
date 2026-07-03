@@ -11,7 +11,7 @@ export const getDashboard = async (req: Request, res: Response) => {
 
     try {
         // Extrai o ID do aluno do token
-        const alunoId = authReq.user.id || authReq.user.sub;
+        const alunoId = authReq.user.cpf || authReq.user.sub;
 
         if (!alunoId) {
             return res.status(401).json({ message: "Token inválido: ID ausente" });
