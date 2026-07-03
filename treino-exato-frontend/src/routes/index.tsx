@@ -8,7 +8,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { LoginView } from '../pages/Login';
-import { Teste } from '../pages/TesteLogin';
+import { HomePersonalView } from '../pages/home_personal_view';
 
 /** Função que define as rotas da aplicação.
  * 
@@ -22,8 +22,8 @@ import { Teste } from '../pages/TesteLogin';
 export const AppRoutes = () => {
     return(
         <Routes>
-            {<Route path="/login" element={<LoginView />} />}               // Rota que exibe a página de login da aplicação, representada pelo componente LoginView
-            {<Route path="/testeLogin" element={<Teste />} />}              // Rota que exibe a página de teste de login da aplicação, representada pelo componente Teste
+            {<Route path="/login" element={<LoginView />} />}              // Rota que exibe a página de teste de login da aplicação, representada pelo componente Teste
+            {<Route path="/personal/dashboard" element={<HomePersonalView />} />}
             <Route path="*" element={<Navigate to="/login" replace />} />   // Redireciona para a página de login caso a rota não seja encontrada
         </Routes>
     )
