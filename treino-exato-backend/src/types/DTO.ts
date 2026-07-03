@@ -14,6 +14,31 @@ export interface User {
   password_hash: string
 }
 
+export interface Exercicio {
+  id: string;
+  nome: string;
+  series: number;
+  repeticoes: string;
+}
+
+export interface Agenda {
+  id: string;
+  aluno_id: string;
+  data: string;
+}
+
+export interface TokenPayload {
+    sub: string;
+    email: string;
+    name: string;
+    role: string;
+    cpf?: string;
+}
+
+export interface AuthRequest extends Request {
+    user: TokenPayload;
+}
+
 export interface AlunoDTO {
     cpf: string;
     nome: string;
