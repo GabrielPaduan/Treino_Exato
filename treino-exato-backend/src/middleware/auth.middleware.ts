@@ -21,21 +21,6 @@ declare global {
   }
 }
 
-// Um fake para teste
-export const verifyTokenFake = (req: Request, res: Response, next: NextFunction) => {
-  const alunoTeste: TokenPayload = {
-    sub: 'aluno-teste-123',
-    name: 'Aluno de Teste',
-    email: 'teste@aluno.com',
-    role: 'ALUNO'
-  };
-
-  req.user = alunoTeste;
-
-  next();
-};
-//
-
 // 3. Middleware de Autenticação (Verifica se está logado)
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
