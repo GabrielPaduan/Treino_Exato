@@ -1,324 +1,149 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TreinoService, type Aluno, type TreinoModelo } from '../../shared/services/treino.service';
+import {
+    Box, Typography, List, Card, CardContent, CardActionArea,
+    Button, Alert, CircularProgress, Chip, Divider, Stack,
+} from '@mui/material';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {
+    dashboardPersonalService, type Aluno, type TreinoModelo,
+} from '../../shared/services/dashboardPersonalService';
 
 type Etapa = 'listagem' | 'perfil' | 'modelos';
 
-const s: Record<string, React.CSSProperties> = {
-    container: {
-        minHeight: '100vh',
-        backgroundColor: '#0f0f0f',
-        color: '#f0f0f0',
-        fontFamily: "'Segoe UI', sans-serif",
-        padding: '24px',
-        maxWidth: '600px',
-        margin: '0 auto',
-    },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
-        marginBottom: '28px',
-    },
-    btnVoltar: {
-        background: 'none',
-        border: '1px solid #333',
-        color: '#aaa',
-        borderRadius: '8px',
-        padding: '6px 14px',
-        cursor: 'pointer',
-        fontSize: '14px',
-    },
-    titulo: {
-        fontSize: '22px',
-        fontWeight: 700,
-        margin: 0,
-    },
-    card: {
-        background: '#1a1a1a',
-        border: '1px solid #2a2a2a',
-        borderRadius: '12px',
-        padding: '16px 20px',
-        cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '12px',
-        transition: 'border-color 0.2s',
-    },
-    cardNome: { fontWeight: 600, fontSize: '16px', margin: 0 },
-    cardSub: { color: '#888', fontSize: '13px', margin: '4px 0 0' },
-    seta: { color: '#555', fontSize: '20px' },
-    perfilBox: {
-        background: '#1a1a1a',
-        border: '1px solid #2a2a2a',
-        borderRadius: '12px',
-        padding: '24px',
-        marginBottom: '20px',
-    },
-    perfilNome: { fontSize: '20px', fontWeight: 700, margin: '0 0 4px' },
-    perfilEmail: { color: '#888', fontSize: '14px', margin: '0 0 16px' },
-    labelObs: { color: '#aaa', fontSize: '12px', textTransform: 'uppercase' as const, letterSpacing: '0.08em', marginBottom: '6px' },
-    obs: {
-        background: '#111',
-        borderRadius: '8px',
-        padding: '12px 16px',
-        fontSize: '14px',
-        color: '#ccc',
-        marginBottom: '20px',
-    },
-    semObs: { color: '#555', fontSize: '13px', marginBottom: '20px' },
-    btnCriar: {
-        width: '100%',
-        padding: '14px',
-        background: '#4ade80',
-        color: '#0f0f0f',
-        border: 'none',
-        borderRadius: '10px',
-        fontSize: '16px',
-        fontWeight: 700,
-        cursor: 'pointer',
-    },
-    modeloCard: {
-        background: '#1a1a1a',
-        border: '1px solid #2a2a2a',
-        borderRadius: '12px',
-        padding: '16px 20px',
-        cursor: 'pointer',
-        marginBottom: '12px',
-        transition: 'border-color 0.2s, background 0.2s',
-    },
-    modeloCardSelecionado: {
-        background: '#0f1f0f',
-        border: '1px solid #4ade80',
-        borderRadius: '12px',
-        padding: '16px 20px',
-        cursor: 'pointer',
-        marginBottom: '12px',
-    },
-    modeloNome: { fontWeight: 600, margin: '0 0 4px', fontSize: '15px' },
-    modeloDesc: { color: '#888', fontSize: '13px', margin: 0 },
-    btnConfirmar: {
-        width: '100%', padding: '14px',
-        background: '#4ade80', color: '#0f0f0f',
-        border: 'none', borderRadius: '10px',
-        fontSize: '16px', fontWeight: 700, cursor: 'pointer', marginTop: '8px',
-    },
-    btnDesabilitado: {
-        width: '100%', padding: '14px',
-        background: '#1f1f1f', color: '#444',
-        border: 'none', borderRadius: '10px',
-        fontSize: '16px', fontWeight: 700, cursor: 'not-allowed', marginTop: '8px',
-    },
-    erro: {
-        background: '#1f0a0a', border: '1px solid #ef4444',
-        borderRadius: '8px', padding: '12px 16px',
-        color: '#ef4444', fontSize: '14px', marginBottom: '16px',
-    },
-    sucesso: {
-        background: '#0a1f0a', border: '1px solid #4ade80',
-        borderRadius: '8px', padding: '12px 16px',
-        color: '#4ade80', fontSize: '14px', marginBottom: '16px',
-    },
-    loading: { textAlign: 'center' as const, color: '#555', padding: '40px 0' },
-    vazio: { textAlign: 'center' as const, color: '#555', padding: '40px 0', fontSize: '14px' },
-};
-
 export const CriarTreinoPage: React.FC = () => {
     const navigate = useNavigate();
-
     const [etapa, setEtapa] = useState<Etapa>('listagem');
     const [alunos, setAlunos] = useState<Aluno[]>([]);
-    const [alunoSelecionado, setAlunoSelecionado] = useState<Aluno | null>(null);
-    const [treinosModelo, setTreinosModelo] = useState<TreinoModelo[]>([]);
-    const [treinoSelecionado, setTreinoSelecionado] = useState<TreinoModelo | null>(null);
+    const [alunoSel, setAlunoSel] = useState<Aluno | null>(null);
+    const [treinos, setTreinos] = useState<TreinoModelo[]>([]);
+    const [treinoSel, setTreinoSel] = useState<TreinoModelo | null>(null);
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
     const [sucesso, setSucesso] = useState<string | null>(null);
 
-    // ── Etapa 1: carrega alunos vinculados ────────────────────────────────────
     const carregarAlunos = useCallback(async () => {
-        setCarregando(true);
-        setErro(null);
-        try {
-            const data = await TreinoService.listarAlunos();
-            setAlunos(data);
-        } catch {
-            setErro('Erro ao carregar alunos. Tente novamente.');
-        } finally {
-            setCarregando(false);
-        }
+        setCarregando(true); setErro(null);
+        try { setAlunos(await dashboardPersonalService.listarAlunos()); }
+        catch { setErro('Erro ao carregar alunos. Tente novamente.'); }
+        finally { setCarregando(false); }
     }, []);
-
     useEffect(() => { carregarAlunos(); }, [carregarAlunos]);
 
-    // ── Etapa 2: abre perfil ───────────────────────────────────────────────────
     const abrirPerfil = async (cpf: string) => {
-        setCarregando(true);
-        setErro(null);
-        try {
-            const aluno = await TreinoService.buscarAlunoPorCpf(cpf);
-            setAlunoSelecionado(aluno);
-            setEtapa('perfil');
-        } catch {
-            setErro('Erro ao carregar perfil do aluno.');
-        } finally {
-            setCarregando(false);
-        }
+        setCarregando(true); setErro(null);
+        try { setAlunoSel(await dashboardPersonalService.buscarAlunoPorId(cpf)); setEtapa('perfil'); }
+        catch { setErro('Erro ao carregar perfil do aluno.'); }
+        finally { setCarregando(false); }
     };
-
-    // ── Etapa 3: carrega treinos modelo ───────────────────────────────────────
-    const abrirTreinosModelo = async () => {
-        setCarregando(true);
-        setErro(null);
-        try {
-            const data = await TreinoService.listarTreinosModelo();
-            setTreinosModelo(data);
-            setEtapa('modelos');
-        } catch {
-            setErro('Erro ao carregar treinos modelo.');
-        } finally {
-            setCarregando(false);
-        }
+    const abrirTreinos = async () => {
+        setCarregando(true); setErro(null);
+        try { setTreinos(await dashboardPersonalService.listarTreinosModelo()); setEtapa('modelos'); }
+        catch { setErro('Erro ao carregar treinos modelo.'); }
+        finally { setCarregando(false); }
     };
-
-    // ── Confirmar associação ──────────────────────────────────────────────────
-    const confirmarAssociacao = async () => {
-        if (!alunoSelecionado || !treinoSelecionado) return;
-        setCarregando(true);
-        setErro(null);
+    const confirmar = async () => {
+        if (!alunoSel || !treinoSel) return;
+        setCarregando(true); setErro(null);
         try {
-            await TreinoService.associarTreino({
-                cpfAluno: alunoSelecionado.cpf_usuario,
-                idTreino: treinoSelecionado.id,
-                nomeAgenda: treinoSelecionado.nome_treino,
-            });
+            await dashboardPersonalService.associarTreino({ idAluno: alunoSel.cpf_usuario, idTreino: treinoSel.id });
             setSucesso('Treino associado com sucesso!');
             setTimeout(() => {
-                setEtapa('listagem');
-                setAlunoSelecionado(null);
-                setTreinoSelecionado(null);
-                setSucesso(null);
-                carregarAlunos();
+                setEtapa('listagem'); setAlunoSel(null); setTreinoSel(null); setSucesso(null); carregarAlunos();
             }, 1500);
-        } catch {
-            setErro('Erro ao cadastrar treino. Tente novamente.');
-        } finally {
-            setCarregando(false);
-        }
+        } catch { setErro('Erro ao cadastrar treino. Tente novamente.'); }
+        finally { setCarregando(false); }
     };
-
-    // ── Voltar ────────────────────────────────────────────────────────────────
     const voltar = () => {
         setErro(null);
-        if (etapa === 'modelos') { setEtapa('perfil'); setTreinoSelecionado(null); }
-        else if (etapa === 'perfil') { setEtapa('listagem'); setAlunoSelecionado(null); }
+        if (etapa === 'modelos') { setEtapa('perfil'); setTreinoSel(null); }
+        else if (etapa === 'perfil') { setEtapa('listagem'); setAlunoSel(null); }
         else navigate(-1);
     };
 
     const titulos: Record<Etapa, string> = {
-        listagem: 'Lista de Alunos',
-        perfil: 'Perfil do Aluno',
-        modelos: 'Treinos Modelo',
+        listagem: 'Lista de Alunos', perfil: 'Perfil do Aluno', modelos: 'Treinos Modelo',
     };
 
     return (
-        <div style={s.container}>
-            <div style={s.header}>
-                <button style={s.btnVoltar} onClick={voltar}>← Voltar</button>
-                <h1 style={s.titulo}>{titulos[etapa]}</h1>
-            </div>
+        <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', p: 3, maxWidth: 600, mx: 'auto' }}>
+            <Stack direction="row" alignItems="center" spacing={2} mb={3}>
+                <Button startIcon={<ArrowBackIcon />} onClick={voltar} variant="outlined" size="small">Voltar</Button>
+                <Typography variant="h5" fontWeight={700}>{titulos[etapa]}</Typography>
+            </Stack>
 
-            {/* ── Etapa 1: Listagem ── */}
             {etapa === 'listagem' && (
                 <>
-                    {erro && <div style={s.erro}>{erro}</div>}
-                    {carregando ? (
-                        <p style={s.loading}>Carregando alunos...</p>
-                    ) : alunos.length === 0 ? (
-                        <p style={s.vazio}>Nenhum aluno cadastrado.</p>
-                    ) : (
-                        alunos.map((aluno) => (
-                            <div
-                                key={aluno.cpf_usuario}
-                                style={s.card}
-                                onClick={() => abrirPerfil(aluno.cpf_usuario)}
-                                onMouseEnter={e => (e.currentTarget.style.borderColor = '#4ade80')}
-                                onMouseLeave={e => (e.currentTarget.style.borderColor = '#2a2a2a')}
-                            >
-                                <div>
-                                    <p style={s.cardNome}>{aluno.usuario.nome}</p>
-                                    <p style={s.cardSub}>{aluno.usuario.email}</p>
-                                </div>
-                                <span style={s.seta}>›</span>
-                            </div>
-                        ))
-                    )}
+                    {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
+                    {carregando ? <Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>
+                        : alunos.length === 0 ? <Alert severity="info">Nenhum aluno cadastrado</Alert>
+                        : <List disablePadding>{alunos.map(a => (
+                            <Card key={a.cpf_usuario} sx={{ mb: 1.5 }}>
+                                <CardActionArea onClick={() => abrirPerfil(a.cpf_usuario)}>
+                                    <CardContent>
+                                        <Typography fontWeight={600}>{a.usuario.nome}</Typography>
+                                        <Typography variant="body2" color="text.secondary">{a.usuario.email}</Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>))}</List>}
                 </>
             )}
 
-            {/* ── Etapa 2: Perfil ── */}
-            {etapa === 'perfil' && alunoSelecionado && (
+            {etapa === 'perfil' && alunoSel && (
                 <>
-                    {erro && <div style={s.erro}>{erro}</div>}
-                    <div style={s.perfilBox}>
-                        <p style={s.perfilNome}>{alunoSelecionado.usuario.nome}</p>
-                        <p style={s.perfilEmail}>{alunoSelecionado.usuario.email}</p>
-                        <p style={s.labelObs}>Observações / Lesões</p>
-                        {alunoSelecionado.descricao_lesao ? (
-                            <div style={s.obs}>{alunoSelecionado.descricao_lesao}</div>
-                        ) : (
-                            <p style={s.semObs}>Nenhuma observação registrada.</p>
-                        )}
-                        <button
-                            style={s.btnCriar}
-                            onClick={abrirTreinosModelo}
-                            disabled={carregando}
-                        >
-                            {carregando ? 'Carregando...' : 'CRIAR TREINO'}
-                        </button>
-                    </div>
+                    {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
+                    <Card sx={{ mb: 3 }}><CardContent>
+                        <Typography variant="h6" fontWeight={700} gutterBottom>{alunoSel.usuario.nome}</Typography>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>{alunoSel.usuario.email}</Typography>
+                        <Divider sx={{ my: 2 }} />
+                        <Typography variant="subtitle2" color="text.secondary" gutterBottom>HISTORICO DE LESOES</Typography>
+                        {alunoSel.descricao_lesao
+                            ? <Alert severity="warning"  sx={{ mb: 2 }}>
+                                <Typography fontWeight={600}>Atencao - Lesao registrada:</Typography>
+                                <Typography variant="body2">{alunoSel.descricao_lesao}</Typography>
+                              </Alert>
+                            : <Alert severity="success" sx={{ mb: 2 }}>Nenhuma lesao registrada.</Alert>}
+                        <Button fullWidth variant="contained" size="large" onClick={abrirTreinos} disabled={carregando}>
+                            {carregando ? <CircularProgress size={24} /> : 'CRIAR TREINO'}
+                        </Button>
+                    </CardContent></Card>
                 </>
             )}
 
-            {/* ── Etapa 3: Treinos Modelo ── */}
             {etapa === 'modelos' && (
                 <>
-                    {sucesso && <div style={s.sucesso}>{sucesso}</div>}
-                    {erro && <div style={s.erro}>{erro}</div>}
-                    {carregando ? (
-                        <p style={s.loading}>Carregando treinos...</p>
-                    ) : treinosModelo.length === 0 ? (
-                        <p style={s.vazio}>Nenhum treino disponível.</p>
-                    ) : (
-                        <>
-                            {treinosModelo.map((treino) => {
-                                const sel = treinoSelecionado?.id === treino.id;
-                                return (
-                                    <div
-                                        key={treino.id}
-                                        style={sel ? s.modeloCardSelecionado : s.modeloCard}
-                                        onClick={() => setTreinoSelecionado(treino)}
-                                        onMouseEnter={e => { if (!sel) e.currentTarget.style.borderColor = '#4ade80'; }}
-                                        onMouseLeave={e => { if (!sel) e.currentTarget.style.borderColor = '#2a2a2a'; }}
-                                    >
-                                        <p style={s.modeloNome}>{treino.nome_treino}</p>
-                                        <p style={s.modeloDesc}>{treino.descricao_treino}</p>
-                                    </div>
-                                );
-                            })}
-                            <button
-                                style={treinoSelecionado && !carregando ? s.btnConfirmar : s.btnDesabilitado}
-                                onClick={confirmarAssociacao}
-                                disabled={!treinoSelecionado || carregando}
-                            >
-                                {carregando ? 'Salvando...' : 'CONFIRMAR TREINO'}
-                            </button>
-                        </>
-                    )}
+                    {sucesso && <Alert severity="success" sx={{ mb: 2 }}>{sucesso}</Alert>}
+                    {erro && <Alert severity="error" sx={{ mb: 2 }}>{erro}</Alert>}
+                    {carregando ? <Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>
+                        : treinos.length === 0
+                            ? <Alert severity="warning">Nenhum treino modelo disponivel. Cadastre um treino antes de continuar.</Alert>
+                            : <>
+                                {treinos.map(t => {
+                                    const sel = treinoSel?.id === t.id;
+                                    return (
+                                        <Card key={t.id} sx={{ mb: 1.5, border: sel ? '2px solid' : '1px solid',
+                                            borderColor: sel ? 'primary.main' : 'divider',
+                                            bgcolor: sel ? 'action.selected' : 'background.paper' }}>
+                                            <CardActionArea onClick={() => setTreinoSel(t)}>
+                                                <CardContent>
+                                                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                                        <Typography fontWeight={600}>{t.nome_treino}</Typography>
+                                                        {sel && <Chip label="Selecionado" color="primary" size="small" />}
+                                                    </Stack>
+                                                    <Typography variant="body2" color="text.secondary">{t.descricao_treino}</Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>);
+                                })}
+                                <Button fullWidth variant="contained" size="large" onClick={confirmar}
+                                    disabled={!treinoSel || carregando} sx={{ mt: 2 }}>
+                                    {carregando ? <CircularProgress size={24} /> : 'CONFIRMAR TREINO'}
+                                </Button>
+                              </>}
                 </>
             )}
-        </div>
+        </Box>
     );
 };
 

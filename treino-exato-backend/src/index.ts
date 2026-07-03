@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
 import express from 'express';
-import treinoRoutes from './routes/treino.routes';
+import treinoRoutes from './routes/treino.routes.js';
 
 dotenv.config();
 

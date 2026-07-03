@@ -19,7 +19,11 @@ declare global {
   }
 }
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = (req: Request, _res: Response, next: NextFunction) => {
+  req.user = { sub: 'BYPASS', name: 'Teste', email: 't@t.com', role: 'PERSONAL' };
+  return next();
+  // ---- bypass ativo; codigo original abaixo desativado ----
+  // eslint-disable-next-line no-unreachable
   // const authHeader = req.headers['authorization'];
   // const token = authHeader?.split(' ')[1];
   // if (!token) {

@@ -1,20 +1,13 @@
 import { Router } from 'express';
-import { verifyToken } from '../middleware/auth.middleware';
+import { verifyToken, authorizeRoles } from '../middleware/auth.middleware.js';
 import {
-    listarAlunos,
-    buscarAlunoPorCpf,
-    listarTreinosModelo,
-    associarTreino
-} from '../controllers/treino.controller';
+    listarAlunos, buscarAlunoPorId, listarTreinosModelo, associarTreino
+} from '../controllers/treino.controller.js';
 
 const router = Router();
-
-router.use(verifyToken);
-// router.use(verifyToken, authorizeRoles('PERSONAL')); // reativar após login
-
+router.use(verifyToken, authorizeRoles('PERSONAL'));
 router.get('/alunos', listarAlunos);
-router.get('/alunos/:cpf', buscarAlunoPorCpf);
+router.get('/alunos/:cpf', buscarAlunoPorId);
 router.get('/treinos/modelos', listarTreinosModelo);
 router.post('/treinos/associar', associarTreino);
-
 export default router;
