@@ -4,7 +4,7 @@ import { TreinoService } from '../services/TreinoService.js';
 
 export const listarAlunos = async (req: Request, res: Response) => {
     try {
-        const cpfPersonal = req.user?.sub ?? '';
+        const cpfPersonal = req.user?.cpf ?? '';
         const alunos = await AlunoService.listarAlunos(cpfPersonal);
         return res.status(200).json(alunos);
     } catch (error) {
@@ -26,7 +26,7 @@ export const buscarAlunoPorId = async (req: Request, res: Response) => {
 
 export const listarTreinosModelo = async (req: Request, res: Response) => {
     try {
-        const cpfPersonal = req.user?.sub ?? '';
+        const cpfPersonal = req.user?.cpf ?? '';
         const treinos = await TreinoService.listarTreinosModelo(cpfPersonal);
         return res.status(200).json(treinos);
     } catch (error) {
@@ -36,7 +36,7 @@ export const listarTreinosModelo = async (req: Request, res: Response) => {
 
 export const associarTreino = async (req: Request, res: Response) => {
     try {
-        const cpfPersonal = req.user?.sub ?? '';
+        const cpfPersonal = req.user?.cpf ?? '';
         const { idAluno, idTreino } = req.body;
         if (!idAluno || !idTreino)
             return res.status(400).json({ message: 'idAluno e idTreino sao obrigatorios.' });

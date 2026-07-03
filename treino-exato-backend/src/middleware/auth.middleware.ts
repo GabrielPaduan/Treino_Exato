@@ -5,8 +5,8 @@ import 'dotenv/config';
 export type UserRole = 'ALUNO' | 'PERSONAL' | 'ADMIN';
 
 export interface TokenPayload {
-  sub: string;
-  name: string;
+  cpf: string;
+  nome: string;
   email: string;
   role: UserRole;
 }
@@ -19,26 +19,25 @@ declare global {
   }
 }
 
-export const verifyToken = (req: Request, _res: Response, next: NextFunction) => {
-  req.user = { sub: 'BYPASS', name: 'Teste', email: 't@t.com', role: 'PERSONAL' };
-  return next();
-  // ---- bypass ativo; codigo original abaixo desativado ----
-  // eslint-disable-next-line no-unreachable
-  // const authHeader = req.headers['authorization'];
-  // const token = authHeader?.split(' ')[1];
-  // if (!token) {
-  //   return res.status(401).json({ message: 'Acesso negado. Token não fornecido.' });
-  // }
-  // try {
-  //   const secret = process.env.JWT_SECRET;
-  //   if (!secret) throw new Error("JWT_SECRET não está configurado.");
-  //   const decoded = jwt.verify(token, secret) as TokenPayload;
-  //   req.user = decoded;
-  //   next();
-  // } catch (error) {
-  //   return res.status(401).json({ message: 'Sessão expirada ou token inválido.' });
-  // }
-  next();
+// 3. Middleware de Autenticação (Verifica se está logado)
+export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Acesso negado. Token não fornecido.' });
+  }
+
+  try {
+    const secret = process.env.JWT_SECRET_KEY;
+    if (!secret) throw new Error("JWT_SECRET_KEY não está configurado.");
+
+    const decoded = jwt.verify(token, secret) as TokenPayload;
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Sessão expirada ou token inválido.' });
+  }
 };
 
 export const authorizeRoles = (...allowedRoles: UserRole[]) => {
