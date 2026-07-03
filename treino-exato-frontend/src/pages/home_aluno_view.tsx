@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../shared/context/auth_context';
 import { getDashboardData } from '../shared/services/dashboard_aluno_service';
