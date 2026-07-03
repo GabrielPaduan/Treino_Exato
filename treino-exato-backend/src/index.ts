@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import treinoRoutes from './routes/treino.routes.js';
 import authRoutes from './routes/login_routes.js';
+import appRoutes from './routes/routes.js';
 import personalRoutes from './routes/personal_routes.js';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.json());
 
 app.use('/api', treinoRoutes);
 app.use('/auth', authRoutes);
+app.use('/api', appRoutes);
 app.use('/personal', personalRoutes);
 
 app.listen(port, () => {
