@@ -43,7 +43,6 @@ export async function autenticarUsuario(loginData: LoginDTO){
     
     // 3: Inicializa a variável role com o valor 'ALUNO' por padrão
     let role = 'ALUNO';
-
     // 4: Busca o aluno correspondente ao usuário autenticado pelo CPF
     const aluno = await buscarAlunoPorCPF(usuario.cpf);
     // 4.1: Se o aluno for encontrado, define o papel (role) como 'ALUNO'

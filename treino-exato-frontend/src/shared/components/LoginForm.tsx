@@ -74,6 +74,7 @@ export function LoginForm(){
 
             // 5.1.4: Navega para a rota correspondente ao papel (role) do usuário,
             // ou para a rota padrão '/login' caso o papel não esteja definido no mapeamento
+            console.log(rotasPorPerfil[decoded.role]);
             navigate(rotasPorPerfil[decoded.role] ?? '/login');
 
         }

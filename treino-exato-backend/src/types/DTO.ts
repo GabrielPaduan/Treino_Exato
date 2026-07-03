@@ -38,3 +38,8 @@ export interface TokenPayload {
 export interface AuthRequest extends Request {
     user: TokenPayload;
 }
+
+export interface AlunoDTO {
+    cpf: string;
+    nome: string;
+}

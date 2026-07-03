@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export type UserRole = 'ALUNO' | 'PERSONAL' | 'ADMIN';
 
 interface GymUser {
-    id: number;
+    cpf: string;
     name: string;
     email: string;
     role: UserRole;   
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const decoded = jwtDecode<any>(newToken);
 
         const userData: GymUser = {
-            id: decoded.id,
+            cpf: decoded.cpf,
             name: decoded.name,
             email: decoded.email,
             role: decoded.role
@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 } else {
                     setToken(storedToken); // Recupera o token do localStorage
                     setUser({
-                        id: decoded.id,
+                        cpf: decoded.cpf,
                         name: decoded.name,
                         email: decoded.email,
                         role: decoded.role as UserRole,

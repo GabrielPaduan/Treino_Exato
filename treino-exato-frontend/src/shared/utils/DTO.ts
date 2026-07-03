@@ -14,3 +14,9 @@ export interface ExercicioDTO {
     repeticoes: string;
     videoUrl?: string;
 }
+
+export interface AlunoDTO {
+    id: string;
+    nome: string;
+    foto?: string;
+}

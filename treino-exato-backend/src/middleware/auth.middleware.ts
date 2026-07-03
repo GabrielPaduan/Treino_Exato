@@ -48,7 +48,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const secret = process.env.JWT_SECRET;
+    const secret = process.env.JWT_SECRET_KEY;
     if (!secret) throw new Error("JWT_SECRET não está configurado.");
     
     // Decodifica e tipa o payload
