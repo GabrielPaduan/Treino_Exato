@@ -14,11 +14,6 @@ export interface User {
   password_hash: string
 }
 
-export interface AlunoDTO {
-    cpf: string;
-    nome: string;
-}
-
 export interface Exercicio {
   id: string;
   nome: string;
@@ -42,4 +37,9 @@ export interface TokenPayload {
 
 export interface AuthRequest extends Request {
     user: TokenPayload;
+}
+
+export interface AlunoDTO {
+    cpf: string;
+    nome: string;
 }
