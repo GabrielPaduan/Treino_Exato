@@ -33,6 +33,8 @@ export function LoginForm(){
     // 3: Define um objeto que mapeia os papéis (roles) dos usuários para as rotas correspondentes na aplicação
     const rotasPorPerfil: Record<string, string> = {
         ALUNO: '/alunoView',       // Adicione a rota correta para o aluno quando estiver disponível
+        PERSONAL: '/personal/dashboard',    // Adicione a rota correta para o personal trainer quando estiver disponível
+        ALUNO: '/alunoView',       // Adicione a rota correta para o aluno quando estiver disponível
         PERSONAL: '/testeLogin',    // Adicione a rota correta para o personal trainer quando estiver disponível
     };
 
@@ -74,6 +76,7 @@ export function LoginForm(){
 
             // 5.1.4: Navega para a rota correspondente ao papel (role) do usuário,
             // ou para a rota padrão '/login' caso o papel não esteja definido no mapeamento
+            console.log(rotasPorPerfil[decoded.role]);
             navigate(rotasPorPerfil[decoded.role] ?? '/login');
 
         }
