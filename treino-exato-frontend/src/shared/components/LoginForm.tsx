@@ -32,8 +32,8 @@ export function LoginForm(){
 
     // 3: Define um objeto que mapeia os papéis (roles) dos usuários para as rotas correspondentes na aplicação
     const rotasPorPerfil: Record<string, string> = {
-        ALUNO: '/testeLogin',       // Adicione a rota correta para o aluno quando estiver disponível
-        PERSONAL: '/testeLogin',    // Adicione a rota correta para o personal trainer quando estiver disponível
+        ALUNO: '/alunoView',       // Adicione a rota correta para o aluno quando estiver disponível
+        PERSONAL: '/personal/dashboard',    // Adicione a rota correta para o personal trainer quando estiver disponível
     };
 
     /** 4: Obtém as funções do React Hook Form para gerenciar o estado do formulário e validar os campos
@@ -68,10 +68,13 @@ export function LoginForm(){
 
             // 5.1.3: Decodifica o token JWT para obter o papel (role) do usuário e navega para a rota correspondente
             const decoded = jwtDecode<{ role: string }>(token);
+            const perfil = decoded.role;
+
+            const rotaDestino = rotasPorPerfil[perfil] || '/login';
 
             // 5.1.4: Navega para a rota correspondente ao papel (role) do usuário,
             // ou para a rota padrão '/login' caso o papel não esteja definido no mapeamento
-            navigate(rotasPorPerfil[decoded.role] ?? '/login');
+            navigate(rotaDestino);
 
         }
         // 5.2: Se ocorrer algum erro durante o login, 
@@ -107,7 +110,7 @@ export function LoginForm(){
             <input
             id="login"
             type="text"
-            placeholder="E-Mail / CPF"
+            placeholder="E-Mail"
             {...register('login', { required: 'Campo obrigatório' })}
             />
             {errors.login && <span>{errors.login.message}</span>}
