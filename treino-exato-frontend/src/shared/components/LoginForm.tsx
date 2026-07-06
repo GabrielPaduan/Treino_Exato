@@ -33,7 +33,7 @@ export function LoginForm(){
     // 3: Define um objeto que mapeia os papéis (roles) dos usuários para as rotas correspondentes na aplicação
     const rotasPorPerfil: Record<string, string> = {
         ALUNO: '/alunoView',       // Adicione a rota correta para o aluno quando estiver disponível
-        PERSONAL: '/personal/dashboard',    // Adicione a rota correta para o personal trainer quando estiver disponível
+        PERSONAL: '/personal/alunos',    // Adicione a rota correta para o personal trainer quando estiver disponível
     };
 
     /** 4: Obtém as funções do React Hook Form para gerenciar o estado do formulário e validar os campos

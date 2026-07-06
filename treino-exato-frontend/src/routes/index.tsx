@@ -29,10 +29,9 @@ export const AppRoutes = () => {
             {<Route path="/login" element={<LoginView />} />}               // Rota que exibe a página de teste de login da aplicação, representada pelo componente Teste
             
             {<Route path="/alunoView" element={<HomeAlunoView />} />}
-            {<Route path="/personal/dashboard" element={<HomePersonalView />} />}
             <Route path="*" element={<Navigate to="/login" replace />} />   // Redireciona para a página de login caso a rota não seja encontrada
             <Route path="/login" element={<LoginView />} />
-            <Route path="/personal/dashboard" element={<HomePersonalView />} />
+            {/* <Route path="/personal/dashboard" element={<HomePersonalView />} /> */}
             <Route path="/personal/alunos" element={<ListagemAlunosView />} />
             <Route path="/personal/alunos/:cpf" element={<PerfilAlunoView />} />
             <Route path="/personal/alunos/:cpf/treinos" element={<TreinosModeloView />} />
