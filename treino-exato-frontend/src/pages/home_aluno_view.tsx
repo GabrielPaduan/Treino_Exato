@@ -22,7 +22,7 @@ const ITENS_NAV = [
 
 const DATAS = ['Hoje', '10/11', '11/11', '12/11'];
 
-export function HomeAlunoView() {
+export function AbrirHomeAluno() {
     const navigate = useNavigate();
     const { user, token, logout } = useAuth();
 

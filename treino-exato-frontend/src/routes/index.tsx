@@ -7,7 +7,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { LoginView } from '../pages/login_view.tsx';
-import { HomeAlunoView } from '../pages/home_aluno_view.tsx';
+import { AbrirHomeAluno } from '../pages/home_aluno_view.tsx';
 import { ListagemAlunosView } from '../pages/home_personal_view.tsx';
 import { PerfilAlunoView } from '../pages/perfil_aluno_view';
 import { TreinosModeloView } from '../pages/treinos_modelo_view';
@@ -28,7 +28,7 @@ export const AppRoutes = () => {
         <Routes>
             {<Route path="/login" element={<LoginView />} />}               // Rota que exibe a página de teste de login da aplicação, representada pelo componente Teste
             
-            {<Route path="/alunoView" element={<HomeAlunoView />} />}
+            {<Route path="/alunoView" element={<AbrirHomeAluno />} />}
             <Route path="*" element={<Navigate to="/login" replace />} />   // Redireciona para a página de login caso a rota não seja encontrada
             <Route path="/login" element={<LoginView />} />
             <Route path="/personal/alunos" element={<ListagemAlunosView />} />
