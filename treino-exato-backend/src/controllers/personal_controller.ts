@@ -24,7 +24,7 @@ export const carregarPerfilAluno = async (req: express.Request, res: express.Res
         return res.status(400).json({ error: "ID do aluno inválido." });
     }
     try {
-        const personalId = req.user!.sub;
+        const personalId = req.user!.cpf;
         const aluno = await personal_service.buscarPerfilAluno(personalId, idAluno);
 
         if (!aluno) {

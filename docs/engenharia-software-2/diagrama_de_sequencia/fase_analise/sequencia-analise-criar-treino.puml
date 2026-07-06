@@ -1,0 +1,54 @@
+@startuml
+title Criar Treino - Diagrama de Sequência (Análise)
+
+actor Instrutor
+
+boundary ListagemAlunosView
+boundary PerfilAlunoView
+boundary TreinosModeloView
+boundary NavegacaoView
+
+control AlunoControl
+control TreinoControl
+
+entity Aluno
+entity Treino
+
+Instrutor -> ListagemAlunosView : acessarListagemAlunos()
+ListagemAlunosView -> AlunoControl : listarAlunos()
+AlunoControl -> Aluno : buscarTodos()
+Aluno --> AlunoControl : listaAlunos
+
+alt [listaAlunos != vazia]
+    AlunoControl --> ListagemAlunosView : exibirAlunos(listaAlunos)
+else [else]
+    AlunoControl --> ListagemAlunosView : exibirMensagem("Nenhum aluno encontrado")
+end
+
+Instrutor -> ListagemAlunosView : selecionarAluno(idAluno)
+ListagemAlunosView -> AlunoControl : abrirPerfilAluno(idAluno)
+AlunoControl -> Aluno : buscarPorId(idAluno)
+Aluno --> AlunoControl : dadosAluno
+AlunoControl --> PerfilAlunoView : exibirPerfil(dadosAluno)
+
+Instrutor -> PerfilAlunoView : pressionarBotaoCriar()
+PerfilAlunoView -> TreinoControl : listarTreinosModelo()
+TreinoControl -> Treino : buscarTreinosModelo()
+Treino --> TreinoControl : listaTreinosModelo
+TreinoControl --> TreinosModeloView : exibirTreinosModelo(listaTreinosModelo)
+
+Instrutor -> TreinosModeloView : selecionarTreino(idTreino)
+TreinosModeloView -> TreinoControl : associarTreino(idAluno, idTreino)
+TreinoControl -> Treino : cadastrarNovoTreino(idAluno, idTreino)
+
+alt [sucesso]
+    Treino --> TreinoControl : confirmacao
+    TreinoControl --> TreinosModeloView : solicitarRota("listagem-alunos")
+    TreinosModeloView -> NavegacaoView : solicitarRota("listagem-alunos")
+    NavegacaoView --> ListagemAlunosView : renderizar()
+else [erro]
+    Treino --> TreinoControl : falha
+    TreinoControl --> TreinosModeloView : exibirMensagem("Erro ao associar treino")
+end
+
+@enduml

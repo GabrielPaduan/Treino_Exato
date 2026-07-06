@@ -4,7 +4,6 @@ import { TreinoRepository } from '../repositories/treino_repository.js';
 import type { AuthRequest } from '../types/DTO.js';
 
 const agendaService = new AgendaService();
-const treinoRepository = new TreinoRepository();
 
 export const getDashboard = async (req: Request, res: Response) => {
     const authReq = (req as unknown) as AuthRequest;
@@ -27,7 +26,7 @@ export const getDashboard = async (req: Request, res: Response) => {
         }
 
         // 3. Bloco alt. (agenda != NULL)
-        const exercicios = await treinoRepository.findExerciciosByAgenda(agendaId);
+        const exercicios = await TreinoRepository.findExerciciosByAgenda(agendaId);
 
         // 4. Retorno de Sucesso: 200 OK + Lista
         return res.status(200).json(exercicios);
