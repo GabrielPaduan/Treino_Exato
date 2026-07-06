@@ -9,7 +9,7 @@
  */
 import type { Request, Response } from 'express';
 import type { LoginDTO, LoginResponse } from '../types/DTO.js';
-import { autenticarUsuario } from '../services/usuario_service.js';
+import { autenticarUsuario } from '../services/usuario_services.js';
 
 /** Função responsável por lidar com a requisição de login. 
  * Recebe os dados de login do corpo da requisição, 
