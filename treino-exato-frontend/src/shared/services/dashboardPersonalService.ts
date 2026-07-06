@@ -17,8 +17,8 @@ export interface AssociarTreinoDTO {
 
 // baseURL do api ja inclui /api -> aqui os paths vao puros (sem /api).
 export const dashboardPersonalService = {
-    listarAlunos: async (): Promise<Aluno[]> => (await api.get('/api/alunos')).data,
-    buscarAlunoPorId: async (cpf: string): Promise<Aluno> => (await api.get(`/api/alunos/${cpf}`)).data,
-    listarTreinosModelo: async (): Promise<TreinoModelo[]> => (await api.get('/api/treinos/modelos')).data,
-    associarTreino: async (dto: AssociarTreinoDTO): Promise<void> => { await api.post('/api/treinos/associar', dto); },
+    listarAlunos: async (): Promise<Aluno[]> => (await api.get('treino/alunos')).data,
+    buscarAlunoPorId: async (cpf: string): Promise<Aluno> => (await api.get(`treino/alunos/${cpf}`)).data,
+    listarTreinosModelo: async (): Promise<TreinoModelo[]> => (await api.get('/treino/modelos')).data,
+    associarTreino: async (dto: AssociarTreinoDTO): Promise<void> => { await api.post('/treino/associar', dto); },
 };

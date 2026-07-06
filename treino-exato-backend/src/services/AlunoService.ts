@@ -1,4 +1,4 @@
-import { AlunoRepository } from '../repositories/AlunoRepository.js';
+import { AlunoRepository } from '../repositories/aluno_repository.js';
 
 export const AlunoService = {
     listarAlunos: (cpfPersonal: string) => AlunoRepository.buscarTodos(cpfPersonal),
