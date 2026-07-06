@@ -36,6 +36,7 @@ export async function autenticarUsuario(loginData: LoginDTO){
     const usuario = await buscarUsuarioPorEmail(loginData.login);
     // 1.1: Se o usuário não for encontrado, lança um erro indicando que o usuário não foi encontrado
     if(!usuario) {throw new Error('Usuário não encontrado');}
+
     // 2: Compara a senha fornecida pelo usuário com a senha armazenada no banco de dados usando bcrypt
     const senhaCorreta = await bcrypt.compare(loginData.senha, usuario.password_hash);
     // 2.1: Se a senha não corresponder, lança um erro indicando que a senha é inválida
@@ -43,6 +44,7 @@ export async function autenticarUsuario(loginData: LoginDTO){
     
     // 3: Inicializa a variável role com o valor 'ALUNO' por padrão
     let role = 'ALUNO';
+    
     // 4: Busca o aluno correspondente ao usuário autenticado pelo CPF
     const aluno = await buscarAlunoPorCPF(usuario.cpf);
     // 4.1: Se o aluno for encontrado, define o papel (role) como 'ALUNO'
