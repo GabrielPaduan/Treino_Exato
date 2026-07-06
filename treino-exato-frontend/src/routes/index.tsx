@@ -4,6 +4,9 @@
  * Navigate é um componente do React Router que permite redirecionar o usuário para uma rota específica.
  * LoginView é um componente que representa a página de login da aplicação.
  */
+import { Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { LoginView } from '../pages/login_view.tsx';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginView } from '../pages/Login';
 import { HomeAlunoView } from '../pages/home_aluno_view.tsx';
